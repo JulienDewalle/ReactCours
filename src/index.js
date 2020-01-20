@@ -36,10 +36,23 @@ function tick() {
       </div>
     );
   
-    ReactDOM.render(element, document.getElementById('root'));
+    ReactDOM.render(element, document.getElementById('root2'));
   }
   
-  // setInterval(tick, 1000);
+    setInterval(tick, 1000);
+
+    // REACT sans JSX
+
+    let heart = React.createElement('span', null, '❤');
+
+    let el = React.createElement('h1', {
+        className: 'title',
+        style: { backgroundColor: "red"}
+    }, 'Hello ' + user.firstname, heart)
+    ReactDOM.render(
+        el,
+        document.getElementById('root3')
+    );
   
 
 // If you want your app to work offline and load faster, you can change
