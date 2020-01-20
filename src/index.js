@@ -117,6 +117,76 @@ function tick() {
         }
     }
 
+    //Les evenements
+    class Button extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = {isToggle: true};
+
+            this.handleClick = this.handleClick.bind(this);
+        }
+
+        handleClick(event) {
+            console.log(event);
+            this.setState(state => ({
+                isToggle: !state.isToggle
+            }));
+        }
+        render(){
+            return (
+                <button onClick={this.handleClick}>
+                    {this.state.isToggle ? 'on' : 'off'}
+                </button>
+            );
+        }
+    }
+
+    // TP compteur
+    class Counter extends React.Component {
+        constructor(props) {
+            super(props);
+            // On peut initialiser le compteur à 4 par exemple
+            this.state = {value: props.init ? props.init : 0};
+        }
+    
+        handleIncrement() {
+            this.setState(state => ({
+                value: ++state.value
+            }));
+        }
+    
+        handleDecrement() {
+            this.setState(state => ({
+                value: --state.value
+            }));
+        }
+    
+        // increment vaut 1 ou -1
+        /* handleChange(increment) {
+            this.setState(state => ({
+                value: state.value + increment
+            }));
+        } */
+    
+        render() {
+            let buttonPlus = <button onClick={() => this.handleIncrement()}>+</button>;
+    
+            // Quand le max du compteur est atteint
+            if (this.state.value >= this.props.max) {
+                buttonPlus = null;
+            }
+    
+            return (
+                <div>
+                    <button onClick={() => this.handleDecrement()}>-</button>
+                    <span>{this.state.value}</span>
+                    {buttonPlus}
+                </div>
+            );
+        }
+    }
+
+
     //setInterval(() => {  
     ReactDOM.render(
         <div>
@@ -125,10 +195,74 @@ function tick() {
             <Clock timeZone="Europe/London"/>
             <Clock timeZone="Europe/Paris"/>
             <MyCounter />
+            <Button />
+            <Counter />
+            <Counter init={10} max={20} />
         </div>,
         document.getElementById('root4')
     );
  //}, 1000);
+
+// afficher effacer message
+ class Message extends React.Component {
+    render() {
+      if (!this.props.show) {
+        return null;
+      }
+  
+      return (
+        <div>
+          {this.props.value}
+        </div>
+      );
+    }
+  }
+  
+  class Greeting extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {isLogged: props.isLogged};
+    }
+  
+    render() {
+      return (
+        <div>
+          <Message value="Vous êtes connecté !" show={this.state.isLogged} />
+          <button onClick={() => this.setState(
+            (state) => ({isLogged: !state.isLogged})
+          )}>Afficher le message</button>
+        </div>
+      );
+    }
+  }
+  
+  ReactDOM.render(
+    <Greeting isLogged={false} />,
+    document.getElementById('root5')
+  );
+  
+
+
+  // Les listes
+
+    class People extends React.Component {
+        render(){
+            //on parcours chaque element
+            [1, 2, 3, 4].map(number =>
+            <li>{number}</li>
+                );
+            return (
+                <ul>
+                    {list}
+                </ul>
+            );
+        }
+    }
+
+  ReactDOM.render(
+    <People />,
+    document.getElementById('root6')
+  );
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
