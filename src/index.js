@@ -53,7 +53,52 @@ function tick() {
         el,
         document.getElementById('root3')
     );
-  
+
+    //Composant React
+
+    class Welcome extends React.Component {
+        render() {
+            return ( 
+            <h1 className={this.props.gender.toLowerCase()}>
+                Bonjour {this.props.name}
+                </h1>
+            );
+        }
+    }
+
+    //composant Clock
+
+    class Clock extends React.Component {
+        constructor(props){
+            super(props); // appel constructeur parent
+            this.state = {date: new Date()};
+        }
+
+        componentDidMount(){ // dom ready
+            this.timer = setInterval(() => {
+                this.setState({date: new Date()});
+            }, 1000);
+        }
+
+        componentWillUnmount() { //disparait du dom
+            clearInterval(this.name);
+        }
+
+        render() {
+            return <h2>Il est {this.state.date.toLocaleTimeString()}</h2>;
+        }
+    }
+
+    //setInterval(() => {  
+    ReactDOM.render(
+        <div>
+            <Welcome name="Julien" gender="Garcon" />
+            <Welcome name="Tata" gender="Fille"/>
+            <Clock />
+        </div>,
+        document.getElementById('root4')
+    );
+ //}, 1000);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
