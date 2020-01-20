@@ -85,7 +85,35 @@ function tick() {
         }
 
         render() {
-            return <h2>Il est {this.state.date.toLocaleTimeString()}</h2>;
+            return <h2>
+                Il est {this.state.date.toLocaleTimeString('fr-FR', {timeZone: this.props.timeZone})} à {this.props.timeZone}
+            </h2>;
+        }
+    }
+
+    //compteur
+    class MyCounter extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = {number: 0};
+        }
+
+        componentDidMount() {
+            this.timer = setInterval(() => {
+                //this.state.number++; fonctionne pas
+                //this.state({number: this.state.number +1})
+                this.setState((state) => ({
+                    number: ++state.number
+                }));
+            }, 1000);
+        }
+
+        componentWillUnmount() {
+            clearInterval(this.timer);
+        }
+
+        render() {
+            return 'Compteur: ' +  this.state.number;
         }
     }
 
@@ -94,7 +122,9 @@ function tick() {
         <div>
             <Welcome name="Julien" gender="Garcon" />
             <Welcome name="Tata" gender="Fille"/>
-            <Clock />
+            <Clock timeZone="Europe/London"/>
+            <Clock timeZone="Europe/Paris"/>
+            <MyCounter />
         </div>,
         document.getElementById('root4')
     );
