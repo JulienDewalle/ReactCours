@@ -248,8 +248,8 @@ function tick() {
     class People extends React.Component {
         render(){
             //on parcours chaque element
-            [1, 2, 3, 4].map(number =>
-            <li>{number}</li>
+            let list = this.props.peoples.map((people, index) =>
+            <li key={people.id}>{people.name}</li>
                 );
             return (
                 <ul>
@@ -259,10 +259,73 @@ function tick() {
         }
     }
 
+    //let peoples = [1, 2, 3, 4];
+    let peoples = [
+        {id: 1, name: 'Julien'},
+        {id: 2, name: 'Toto'}
+    ]
+
   ReactDOM.render(
-    <People />,
+    <People peoples={peoples}/>,
     document.getElementById('root6')
   );
+
+
+// TP ELEVES !!!!!!!!!!!!!!!!!!!!!
+
+
+class ClassRoom extends React.Component {
+
+    average(notes){
+        let sum = 0;
+        for (let note of notes){
+            sum += note;
+        }
+        return Math.round(sum / notes.length * 100) / 100;
+    }
+
+    totalAverage(){
+        let sum=0;
+        for(let student of this.props.students){
+            sum += this.average(student.notes);
+        }
+        return Math.round(sum / this.props.students.lenght *100) / 100;
+    }
+
+ 
+    render() {
+      return (
+          <div>
+            <ul>
+                {this.props.students.map(student =>
+                    <li key={student.id}>
+                        {student.name} a eu {student.notes.join(', ')}.<br />
+                        Sa moyenne est de {this.average(student.notes)}
+                    </li>
+                )}
+            </ul>
+            <h3>La moyenne de la classe : {this.totalAverage()}</h3>
+            <h3>La meilleure note : {this.totalAverage()}</h3>
+            <h3>La moins bonne note : {this.totalAverage()}</h3>
+          </div>
+       
+      );
+    }
+  }
+
+ let students = [
+    {id: 1, name: 'Jean', lastname: 'Cliford', note: [10, 15, 8]},
+    {id : 2, name: 'François', lastname: 'Cliferd', note: [8, 6, 5]},
+    {id : 3, name: 'Jeannot', lastname: 'Clifard',  note: [18, 20, 14]}
+]
+
+  ReactDOM.render(
+    <ClassRoom students={students}/>,
+    document.getElementById('root7')
+  );
+  
+
+  
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
